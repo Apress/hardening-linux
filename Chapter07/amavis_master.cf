@@ -1,0 +1,10 @@
+amavis           unix  -  n  n  -  10  pipe user=amavis argv=/usr/sbin/amavis ${sender} ${recipient}
+
+localhost:10025  inet  n  -  y  -  -   smtpd
+       -o content_filter=
+       -o local_recipient_maps=
+       -o smtpd_helo_restrictions=
+       -o smtpd_client_restrictions=
+       -o smtpd_sender_restrictions=
+       -o smtpd_recipient_restrictions=permit_mynetworks,reject
+       -o mynetworks=127.0.0.0/8

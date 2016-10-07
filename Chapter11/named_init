@@ -1,0 +1,51 @@
+#!/bin/sh
+# This shell script takes care of starting and stopping named
+# chkconfig: 345 55 45
+# description: named (BIND) is a Domain Name Server daemon
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+# Check that networking is up.
+[ ${NETWORKING} = "no" ] && exit 0
+[ -f /usr/local/sbin/named ] || exit 0
+[ -f /chroot/named/etc/named.conf ] || exit 0
+
+# See how we were called.
+
+  case "$1" in
+    start)
+          # Start daemons.
+          echo -n "Starting named: "
+          daemon /usr/local/sbin/named -u named –t /chroot/named
+          echo
+          touch /var/lock/subsys/named
+          ;;
+    stop)
+          # Stop daemons.
+          echo -n "Shutting down named: "
+          killproc named
+          rm -f /var/lock/subsys/named
+          echo
+          ;;
+    status)
+          status named
+          exit $?
+          ;;
+    restart)
+          $0 stop
+          $0 start
+          exit $?
+          ;;
+    reload)
+          /usr/local/sbin/rndc reload
+          exit $?
+          ;;
+    *)
+          echo "Usage: named {start|stop|status|restart|reload}"
+          exit 1
+esac
+exit 0

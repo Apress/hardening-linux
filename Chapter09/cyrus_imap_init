@@ -1,0 +1,24 @@
+#!/bin/bash
+# Cyrus IMAP startup script
+# Source function library.
+
+. /etc/init.d/functions
+
+prog="/usr/cyrus/bin/master"
+opt="-d"
+
+case "$1" in
+start)
+# Starting Cyrus IMAP Server
+chroot /chroot/cyrus/ $prog $opt
+;;
+stop)
+# Stopping Cyrus IMAP Server
+killproc $prog
+;;
+*)
+echo "Usage: $0 {start|stop}"
+exit 1
+;;
+
+esac

@@ -1,0 +1,30 @@
+allow_untrusted_routing = no
+smtpd_helo_required = yes
+smtpd_delay_reject = yes
+strict_rfc821_envelopes = yes
+disable_vrfy_command = yes
+
+smtpd_recipient_restrictions  =
+permit_mynetworks,
+permit_sasl_authenticated,
+reject_unauth_destination,
+reject_non_fqdn_sender,
+reject_non_fqdn_recipient,
+reject_unknown_sender_domain,
+reject_unknown_recipient_domain,
+reject_invalid_hostname,
+reject_unknown_hostname,
+reject_multi_recipient_bounce,
+reject_rbl_client bl.spamcop.net,
+reject_rbl_client sbl.spamhaus.org,
+reject_rbl_client relays.ordb.org,
+reject_rbl_client opm.blitzed.org,
+reject_rhsbl_client bogusmx.rfc-ignorant.org,
+reject_rhsbl_client dsn.rfc-ignorant.org,
+reject_rhsbl_sender bogusmx.rfc-ignorant.org,
+reject_rhsbl_sender dsn.rfc-ignorant.org,
+permit
+
+smtpd_data_restrictions = 
+reject_unauth_pipelining,
+permit
